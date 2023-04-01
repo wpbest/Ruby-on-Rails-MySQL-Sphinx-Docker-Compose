@@ -19,7 +19,13 @@ FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential default-libmysqlclient-dev git libpq-dev libvips pkg-config
+    apt-get install --no-install-recommends -y git-core zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev && \
+    apt-get install --no-install-recomments -y default-libmysqlclient-dev git libpq-dev libvips pkg-config libxml2-dev && \
+    apt-get install --no-install-recommends -y libxslt1-dev libcurl4-openssl-dev software-properties-common && \
+    apt-get install --no-install-recommends -y bash bash-completion libffi-dev tzdata nodejs npm yarn && \
+    apt-get install --no-install-recommends -y imagemagick libmagickwand-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./

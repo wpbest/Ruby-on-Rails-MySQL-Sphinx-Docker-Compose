@@ -1,0 +1,22 @@
+version: "3"
+services:
+  app:
+    build: .
+    command: bundle exec rails s -p 3000 -b "0.0.0.0"
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - sphinx
+
+
+  sphinx:
+    image: macbre/sphinxsearch:latest
+    ports:
+      - "9306:9306"
+    volumes:
+      - sphinx_data:/var/lib/sphinxsearch/data
+
+volumes:
+  sphinx_data:
